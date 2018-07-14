@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
             Manifest.permission.READ_EXTERNAL_STORAGE
     };
 
-    private final boolean fromExternalSource = true;
+    private final boolean fromExternalSource = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +56,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         databaseAccess.open();
-        List<String> quotes = databaseAccess.getQuotes();
+//        List<String> quotes = databaseAccess.getQuotes();
+        ArrayList<CarModel> carModels = databaseAccess.getQuotes();
         databaseAccess.close();
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, quotes);
-        this.listView.setAdapter(adapter);
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_item_layout, quotes);
+        CustomAdapter customAdapter = new CustomAdapter(this,carModels);
+        this.listView.setAdapter(customAdapter);
     }
 
     @Override

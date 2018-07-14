@@ -63,12 +63,17 @@ public class DatabaseAccess {
      *
      * @return a List of quotes
      */
-    public List<String> getQuotes() {
-        List<String> list = new ArrayList<>();
-        Cursor cursor = database.rawQuery("SELECT * FROM quotes", null);
+    public ArrayList<CarModel> getQuotes() {
+        ArrayList<CarModel> list = new ArrayList<>();
+        Cursor cursor = database.rawQuery("SELECT * FROM carmodels", null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            list.add(cursor.getString(0));
+            CarModel carModel = new CarModel();
+            carModel.setId(cursor.getString(0));
+            carModel.setName(cursor.getString(1));
+            carModel.setSuffix(cursor.getString(2));
+            list.add(carModel);
+//            list.add(cursor.getString(0));
             cursor.moveToNext();
         }
         cursor.close();
